@@ -28,8 +28,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	 *            weight[i].
 	 * @return a BinarySearchAutocomplete whose myTerms object has myTerms[i] =
 	 *         a Term with word terms[i] and weight weights[i].
-	 * @throws a
-	 *             NullPointerException if either argument passed in is null
+	 * @throws NullPointerException if either argument passed in is null
 	 */
 	public BinarySearchAutocomplete(String[] terms, double[] weights) {
 		if (terms == null || weights == null) {
@@ -101,7 +100,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	@Override
 	public List<Term> topMatches(String prefix, int k) {
 		Term dummy = new Term(prefix,0);
-		Term.PrefixOrder comp = new Term.PrefixOrder(prefix.length());
+		PrefixComparator comp = PrefixComparator.getComparator(prefix.length());
 		int first = firstIndexOf(myTerms, dummy, comp);
 		int last = lastIndexOf(myTerms, dummy, comp);
 
@@ -109,7 +108,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 			return new ArrayList<>();
 		}
 
-		// write code here
+		// write code here for P5 assignment
 
 		return null;
 	

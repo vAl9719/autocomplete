@@ -10,11 +10,14 @@ import java.util.*;
 public class BinarySearchLibrary {
 	
 	/**
-	 * Return smallest index of target in list using comp
+	 * Return the index of the first object (smallest index)
+	 * o in parameter "equal" to target, that is
+	 * the first object o such that comp.compare(o,target) == 0
+	 *
 	 * @param list is list of Items being searched
 	 * @param target is Item searched for
 	 * @param comp how Items are compared for binary search
-	 * @return smallest index k such that list.get(k).equals(target)
+	 * @return smallest index k such that comp.compare(list.get(k),target) == 0
 	 */
 	public static <T>
 	    int firstIndexSlow(List<T> list, 
@@ -30,12 +33,12 @@ public class BinarySearchLibrary {
 	}
 	
 	/**
-	 * Return smallest index of target in list using comp. 
+	 * Return smallest index of target in list using comp
 	 * Guaranteed to make ceiling(1 + log(list.size())) comparisons
 	 * @param list is list of Items being searched
 	 * @param target is Item searched for
 	 * @param comp how Items are compared for binary search
-	 * @return smallest index k such that list.get(k).equals(target),
+	 * @return smallest index k such that comp.compare(list.get(k),target) == 0
 	 * Return -1 if there is no such object in list.               
 	 */
 	public static <T>
@@ -52,12 +55,11 @@ public class BinarySearchLibrary {
 	}
 
 	 /**                                                                                          
-     * Return the index of the last object in parameter                      
-     * list -- the first object o such that 
-     * comp.compare(o,target) == 0.                         
-     *                                                                                           
-     * This method should not call comparator.compare() more 
-     * than 1+log n times, where n is list.size()                  
+     * Return the index of the last object (largest index)
+	 * o in parameter "equal" to target, that is
+     * the last object o such that comp.compare(o,target) == 0.
+     * Guaranteed to make ceiling(1 + log(list.size())) comparisons
+     *
      * @param list is the list of objects being searched                                         
      * @param target is the object being searched for                                            
      * @param comp is how comparisons are made                                                   

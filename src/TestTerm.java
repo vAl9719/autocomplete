@@ -123,7 +123,7 @@ public class TestTerm {
 			terms1[i] = terms1[terms1.length - 1 - i];
 			terms1[terms1.length - 1 - i] = temp;
 		}
-		Arrays.sort(terms1, new Term.PrefixOrder(1));
+		Arrays.sort(terms1, PrefixComparator.getComparator(1));
 		assertArrayEquals(sorted1, terms1);
 
 		Term[] terms2 = getTerms();
@@ -133,7 +133,7 @@ public class TestTerm {
 			terms2[i] = terms2[terms2.length - 1 - i];
 			terms2[terms2.length - 1 - i] = temp;
 		}
-		Arrays.sort(terms2, new Term.PrefixOrder(2));
+		Arrays.sort(terms2, PrefixComparator.getComparator(2));
 		assertArrayEquals(sorted2, terms2);
 
 		Term[] terms3 = getTerms();
@@ -143,21 +143,21 @@ public class TestTerm {
 			terms3[i] = terms3[terms3.length - 1 - i];
 			terms3[terms3.length - 1 - i] = temp;
 		}
-		Arrays.sort(terms3, new Term.PrefixOrder(3));
+		Arrays.sort(terms3, PrefixComparator.getComparator(3));
 		assertArrayEquals(sorted3, terms3);
 
 		// Test prefix case
 		Term[] terms4 = getTerms();
 		Term[] sorted4 = { terms4[0], terms4[1], terms4[2], terms4[3], terms4[4], terms4[5], terms4[6] };
 		Collections.shuffle(Arrays.asList(terms4));
-		Arrays.sort(terms4, new Term.PrefixOrder(10));
+		Arrays.sort(terms4, PrefixComparator.getComparator(10));
 		assertArrayEquals(sorted4, terms4);
 
 		// Test zero case
 		Term[] terms5 = getTerms();
 		Collections.shuffle(Arrays.asList(terms5));
 		Term[] sorted5 = terms5.clone();
-		Arrays.sort(terms5, new Term.PrefixOrder(0));
+		Arrays.sort(terms5, PrefixComparator.getComparator(0));
 		assertArrayEquals(sorted5, terms5);
 	}
 
@@ -172,5 +172,18 @@ public class TestTerm {
 			assertTrue(t.toString().contains(t.getWord()),"word missing");
 			assertTrue(t.toString().contains(","),"no comma");
 		}
+	}
+
+	@Test
+	public void testPrefixPrefix() {
+		Term a = new Term("bee",0);
+		Term b = new Term("beeswax",0);
+		Comparator<Term> c3 = PrefixComparator.getComparator(3); //new Term.PrefixOrder(3);
+		Comparator<Term> c4 = PrefixComparator.getComparator(4); //new Term.PrefixOrder(4);
+
+		int r3 = c3.compare(a,b);
+		int r4 = c4.compare(a,b);
+		assertEquals(0,r3,a.getWord()+ " "+b.getWord()+" 3");
+		assertEquals(-1,Math.signum(r4),a.getWord()+ " "+b.getWord()+" 4");
 	}
 }

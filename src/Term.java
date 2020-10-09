@@ -29,7 +29,15 @@ public class Term implements Comparable<Term> {
 	 *             if weight is negative
 	 */
 	public Term(String word, double weight) {
-		// TODO: Complete Term constructor, throw exceptions
+		if (word == null) {
+			throw new NullPointerException("no null strings");
+		}
+		if (weight < 0.0) {
+			throw new IllegalArgumentException("no negative weigths: " + weight);
+		}
+
+		myWord = word;
+		myWeight = weight;
 	}
 	
 	/**
@@ -54,8 +62,7 @@ public class Term implements Comparable<Term> {
 	 * @return this Term's weight
 	 */
 	public double getWeight() {
-		// TODO: Change implementation
-		return 0;
+		return myWeight;
 	}
 
 	/**
@@ -74,35 +81,5 @@ public class Term implements Comparable<Term> {
 	public boolean equals(Object o) {
 		Term other = (Term) o;
 		return this.compareTo(other) == 0;
-	}
-
-	/**
-	 * A Comparator for comparing Terms using a set number of the letters they
-	 * start with. 
-	 * This Comparator required for assignment.
-	 *
-	 */
-	public static class PrefixOrder implements Comparator<Term> {
-		private final int myPrefixSize;
-
-		public PrefixOrder(int r) {
-			this.myPrefixSize = r;
-		}
-
-		/**
-		 * Compares v and w lexicographically using only their first r letters.
-		 * If the first r letters are the same, then v and w should be
-		 * considered equal. This method should take O(r) to run, and be
-		 * independent of the length of v and w's length. You can access the
-		 * Strings to compare using v.word and w.word.
-		 * 
-		 * @param v/w
-		 *            - Two Terms whose words are being compared
-		 */
-		public int compare(Term v, Term w) {
-			// TODO: Implement compare
-			return 0;
-		}
-	
 	}
 }

@@ -26,11 +26,11 @@ public class TestBinarySearchAutocomplete {
 	 */
 	public class CompareCounter implements Comparator<Term> {
 
-		private Term.PrefixOrder comparator;
+		private PrefixComparator comparator;
 		private int count = 0;
 
 		public CompareCounter(int r) {
-			comparator = new Term.PrefixOrder(r);
+			comparator = PrefixComparator.getComparator(r);
 		}
 
 		@Override
@@ -96,26 +96,26 @@ public class TestBinarySearchAutocomplete {
 	 */
 	@Test
 	public void testFirstIndexOfHits() {
-		assertEquals(0, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("a", 0), new Term.PrefixOrder(1)));
+		assertEquals(0, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("a", 0), PrefixComparator.getComparator(1)));
 
-		assertEquals(0, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("a", 0), new Term.PrefixOrder(1)));
+		assertEquals(0, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("a", 0), PrefixComparator.getComparator(1)));
 
-		assertEquals(2, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("ba", 0), new Term.PrefixOrder(2)));
+		assertEquals(2, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("ba", 0), PrefixComparator.getComparator(2)));
 
-		assertEquals(4, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("cat", 0), new Term.PrefixOrder(3)));
+		assertEquals(4, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("cat", 0), PrefixComparator.getComparator(3)));
 	}
 
 	@Test
 	public void testLastIndexOfHits() {
-		assertEquals(1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("a", 0), new Term.PrefixOrder(1)));
+		assertEquals(1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("a", 0), PrefixComparator.getComparator(1)));
 
-		assertEquals(1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("ap", 0), new Term.PrefixOrder(2)));
+		assertEquals(1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("ap", 0), PrefixComparator.getComparator(2)));
 
-		assertEquals(0, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("ape", 0), new Term.PrefixOrder(3)));
+		assertEquals(0, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("ape", 0), PrefixComparator.getComparator(3)));
 
-		assertEquals(3, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("b", 0), new Term.PrefixOrder(1)));
+		assertEquals(3, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("b", 0), PrefixComparator.getComparator(1)));
 
-		assertEquals(4, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("c", 0), new Term.PrefixOrder(1)));
+		assertEquals(4, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("c", 0), PrefixComparator.getComparator(1)));
 	}
 
 	/**
@@ -124,10 +124,10 @@ public class TestBinarySearchAutocomplete {
 	 */
 	@Test
 	public void testFirstIndexOfMisses() {
-		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("d", 0), new Term.PrefixOrder(1)));
-		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("ab", 0), new Term.PrefixOrder(2)));
-		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("car", 0), new Term.PrefixOrder(3)));
-		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("cats", 0), new Term.PrefixOrder(4)));
+		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("d", 0), PrefixComparator.getComparator(1)));
+		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("ab", 0), PrefixComparator.getComparator(2)));
+		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("car", 0), PrefixComparator.getComparator(3)));
+		assertEquals(-1, BinarySearchAutocomplete.firstIndexOf(myTerms, new Term("cats", 0), PrefixComparator.getComparator(4)));
 	}
 
 	/**
@@ -135,10 +135,10 @@ public class TestBinarySearchAutocomplete {
 	 */
 	@Test
 	public void testLastIndexOfMisses() {
-		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("d", 0), new Term.PrefixOrder(1)));
-		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("ab", 0), new Term.PrefixOrder(2)));
-		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("car", 0), new Term.PrefixOrder(3)));
-		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("cat ", 0), new Term.PrefixOrder(4)));
+		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("d", 0), PrefixComparator.getComparator(1)));
+		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("ab", 0), PrefixComparator.getComparator(2)));
+		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("car", 0), PrefixComparator.getComparator(3)));
+		assertEquals(-1, BinarySearchAutocomplete.lastIndexOf(myTerms, new Term("cat ", 0), PrefixComparator.getComparator(4)));
 	}
 
 	/**
@@ -150,10 +150,10 @@ public class TestBinarySearchAutocomplete {
 		Term[] terms = new Term[] { new Term("ape", 0), new Term("apple", 0), new Term("apple", 0),
 				new Term("apple", 0), new Term("bat", 0), new Term("bat", 0), new Term("bat", 0), new Term("bee", 0),
 				new Term("bee", 0), new Term("bee", 0), new Term("cat", 0) };
-		assertEquals(0, BinarySearchAutocomplete.firstIndexOf(terms, new Term("a", 0), new Term.PrefixOrder(1)));
-		assertEquals(1, BinarySearchAutocomplete.firstIndexOf(terms, new Term("app", 0), new Term.PrefixOrder(3)));
-		assertEquals(4, BinarySearchAutocomplete.firstIndexOf(terms, new Term("b", 0), new Term.PrefixOrder(1)));
-		assertEquals(7, BinarySearchAutocomplete.firstIndexOf(terms, new Term("be", 0), new Term.PrefixOrder(2)));
+		assertEquals(0, BinarySearchAutocomplete.firstIndexOf(terms, new Term("a", 0), PrefixComparator.getComparator(1)));
+		assertEquals(1, BinarySearchAutocomplete.firstIndexOf(terms, new Term("app", 0), PrefixComparator.getComparator(3)));
+		assertEquals(4, BinarySearchAutocomplete.firstIndexOf(terms, new Term("b", 0), PrefixComparator.getComparator(1)));
+		assertEquals(7, BinarySearchAutocomplete.firstIndexOf(terms, new Term("be", 0), PrefixComparator.getComparator(2)));
 	}
 
 	@Test
@@ -161,10 +161,10 @@ public class TestBinarySearchAutocomplete {
 		Term[] terms = new Term[] { new Term("ape", 0), new Term("apple", 0), new Term("apple", 0),
 				new Term("apple", 0), new Term("bat", 0), new Term("bat", 0), new Term("bat", 0), new Term("bee", 0),
 				new Term("bee", 0), new Term("bee", 0), new Term("cat", 0) };
-		assertEquals(3, BinarySearchAutocomplete.lastIndexOf(terms, new Term("a", 0), new Term.PrefixOrder(1)));
-		assertEquals(3, BinarySearchAutocomplete.lastIndexOf(terms, new Term("app", 0), new Term.PrefixOrder(3)));
-		assertEquals(6, BinarySearchAutocomplete.lastIndexOf(terms, new Term("ba", 0), new Term.PrefixOrder(2)));
-		assertEquals(9, BinarySearchAutocomplete.lastIndexOf(terms, new Term("b", 0), new Term.PrefixOrder(1)));
+		assertEquals(3, BinarySearchAutocomplete.lastIndexOf(terms, new Term("a", 0), PrefixComparator.getComparator(1)));
+		assertEquals(3, BinarySearchAutocomplete.lastIndexOf(terms, new Term("app", 0), PrefixComparator.getComparator(3)));
+		assertEquals(6, BinarySearchAutocomplete.lastIndexOf(terms, new Term("ba", 0), PrefixComparator.getComparator(2)));
+		assertEquals(9, BinarySearchAutocomplete.lastIndexOf(terms, new Term("b", 0), PrefixComparator.getComparator(1)));
 	}
 	
 	@Test
@@ -204,7 +204,7 @@ public class TestBinarySearchAutocomplete {
 			}
 			Term[] terms2 = terms.clone();
 			BinarySearchAutocomplete.firstIndexOf(
-					terms2, new Term("a", 0), new Term.PrefixOrder(1));
+					terms2, new Term("a", 0), PrefixComparator.getComparator(1));
 			assertArrayEquals(terms, terms2,"firstIndexOf mutates arguments");
 		}
 	}
@@ -218,7 +218,7 @@ public class TestBinarySearchAutocomplete {
 			}
 			Term[] terms2 = terms.clone();
 			BinarySearchAutocomplete.lastIndexOf(
-					terms2, new Term("a", 0), new Term.PrefixOrder(1));
+					terms2, new Term("a", 0), PrefixComparator.getComparator(1)	);
 			assertArrayEquals(terms, terms2,"firstIndexOf mutates arguments"
 					);
 		}

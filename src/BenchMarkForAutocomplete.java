@@ -9,8 +9,9 @@ public class BenchMarkForAutocomplete {
 	public static final Locale LOCALE = Locale.US;
 	
 	String[] myCompletorNames = {
-		"BruteAutocomplete","BinarySearchAutocomplete",
-		"HashListAutocomplete"
+		"BruteAutocomplete",
+		// "BinarySearchAutocomplete",
+		// "HashListAutocomplete"
 	};
 	Autocompletor[] myCompletors;
 	
