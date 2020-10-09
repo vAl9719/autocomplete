@@ -34,6 +34,7 @@ public class PrefixComparator implements Comparator<Term> {
 
     @Override
     public int compare(Term v, Term w) {
+        // change this to use myPrefixSize as specified
         return v.getWord().compareTo(w.getWord());
     }
 }
