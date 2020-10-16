@@ -28,13 +28,16 @@ public class PrefixComparator implements Comparator<Term> {
      * @return PrefixComparator that uses prefix
      */
     public static PrefixComparator getComparator(int prefix) {
-       return new PrefixComparator(prefix);
+        return new PrefixComparator(prefix);
     }
 
 
     @Override
     public int compare(Term v, Term w) {
         // change this to use myPrefixSize as specified
-        return v.getWord().compareTo(w.getWord());
+        if(myPrefixSize > v.getWord().length() || myPrefixSize > w.getWord().length()){
+            return v.getWord().compareTo(w.getWord());
+        }
+        return v.getWord().substring(0, myPrefixSize).compareTo(w.getWord().substring(0, myPrefixSize));
     }
 }
