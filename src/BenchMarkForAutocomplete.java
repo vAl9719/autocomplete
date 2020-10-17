@@ -9,9 +9,9 @@ public class BenchMarkForAutocomplete {
 	public static final Locale LOCALE = Locale.US;
 	
 	String[] myCompletorNames = {
-		"BruteAutocomplete",
-		// "BinarySearchAutocomplete",
-		// "HashListAutocomplete"
+		//"BruteAutocomplete",
+		 "BinarySearchAutocomplete",
+		 //"HashListAutocomplete"
 	};
 	Autocompletor[] myCompletors;
 	
@@ -97,9 +97,9 @@ public class BenchMarkForAutocomplete {
 
 	}
 	public void doMark() throws FileNotFoundException {
-		String fname = "data/threeletterwords.txt"; 
-		//fname = "data/fourletterwords.txt";
-		//fname = "data/alexa.txt";
+		//String fname = "data/threeletterwords.txt";
+		//String fname = "data/fourletterwords.txt";
+		String fname = "data/alexa.txt";
 		setUp(fname);
 		runAM();
 	}

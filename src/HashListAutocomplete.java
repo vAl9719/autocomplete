@@ -7,7 +7,7 @@ import java.util.*;
 
 public class HashListAutocomplete implements Autocompletor {
     private static final int MAX_PREFIX = 10;
-    private Map<String, List<Term>> myMap;
+    private Map<String, List<Term>> myMap = new HashMap<>();
     private int mySize;
 
 
@@ -35,9 +35,9 @@ public class HashListAutocomplete implements Autocompletor {
         if(k == 0) return new ArrayList<>();
 
         if(myMap.containsKey(prefix.substring(0,Math.min(prefix.length(), MAX_PREFIX)))) {
-            List<Term> pfs = myMap.get(prefix);
-            List<Term> ret = pfs.subList(0, Math.min(k, pfs.size()));
-            return ret;
+            List<Term> all = myMap.get(prefix);
+            List<Term> list = all.subList(0, Math.min(k, all.size()));
+            return list;
         }
 
         return new ArrayList<>();
@@ -59,11 +59,11 @@ public class HashListAutocomplete implements Autocompletor {
             String s = terms[i];
             int j = 0;
             while(j<=s.length() && j<= MAX_PREFIX){
-                String prefix = s.substring(0,i);
+                String prefix = s.substring(0,j);
 
-                if(! myMap.containsKey(prefix)){
-                    myMap.put(prefix, new ArrayList<>());
-                }
+
+                myMap.putIfAbsent(prefix, new ArrayList<>());
+
                 myMap.get(prefix).add(new Term(s, weights[i]));
                 j++;
 
